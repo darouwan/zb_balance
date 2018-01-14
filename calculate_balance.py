@@ -2,6 +2,7 @@ import codecs
 import json
 
 import requests
+import time
 
 transaction_file = "transactions.txt"  # transactions file name
 coin_type = "hsr"  # coin type, like btc,eth, or hsr, etc.
@@ -47,11 +48,15 @@ def read_file(file_name="transactions.txt"):
 def get_balance(trans_list):
     final_coin = 0
     final_money = 0
+    buy_in_cost = 0
+    buy_in_coin = 0
     for transaction in trans_list:
         if isinstance(transaction, Transactions):
             if transaction.category == "+":
                 final_coin = final_coin + transaction.coin_amount
                 final_money = final_money - transaction.money_amount
+                buy_in_cost +=transaction.money_amount
+                buy_in_coin+=transaction.coin_amount
             elif transaction.category == "-":
                 final_coin = final_coin - transaction.coin_amount
                 final_money = final_money + transaction.money_amount
@@ -61,6 +66,7 @@ def get_balance(trans_list):
     price = get_latest_market(coin_type, currency_type)
     actual_benefit = final_coin * price + final_money
     print("Actual Benefit = ", actual_benefit)
+    print("Avg buy in cost = ",buy_in_cost/buy_in_coin)
 
 
 def get_latest_market(coin="hsr", currency="qc"):
@@ -74,4 +80,6 @@ def get_latest_market(coin="hsr", currency="qc"):
 
 
 if __name__ == "__main__":
-    get_balance(read_file(transaction_file))
+    while True:
+        get_balance(read_file(transaction_file))
+        time.sleep(5)
