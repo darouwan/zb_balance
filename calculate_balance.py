@@ -1,6 +1,11 @@
 import codecs
-import requests
 import json
+
+import requests
+
+transaction_file = "transactions.txt" # transactions file name
+coin_type = "hsr" # coin type, like btc,eth, or hsr, etc.
+currency_type = "qc" # currency name, like qc or usdt
 
 
 class Transactions:
@@ -52,20 +57,20 @@ def get_balance(list):
                 final_money = final_money + transction.money_amount
     print("final coin = ", final_coin)
     print("final money = ", final_money)
-    print("Next buy = ", final_money/final_coin)
-    price = get_latest_market()
-    actual_benefit = final_coin*price+final_money
+    print("Next buy = ", final_money / final_coin)
+    price = get_latest_market(coin_type, currency_type)
+    actual_benefit = final_coin * price + final_money
     print("Actual Benefit = ", actual_benefit)
 
 
-def get_latest_market(coin_type="hsr", currency="qc"):
-    r = requests.get("http://api.zb.com/data/v1/ticker?market="+coin_type+"_"+currency)
+def get_latest_market(coin="hsr", currency="qc"):
+    r = requests.get("http://api.zb.com/data/v1/ticker?market=" + coin + "_" + currency)
     content = r.content
-    #print(content)
+    # print(content)
     data = json.loads(content.decode())
     price = float(data['ticker']['last'])
     print("The last price = ", price)
     return price
 
 
-get_balance(read_file())
+get_balance(read_file(transaction_file))
