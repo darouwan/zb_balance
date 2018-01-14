@@ -5,8 +5,9 @@
 2. 在代码文件中，根据自己需要修改transaction_file，coin_type，currency_type
    这3个参数。transaction_file指的是存放交易数据的文件，coin_type指的是虚拟货
    币类型，比如hsr，btc等。currency_type指的是法币类型，比如qc或者usdt
-3. 打开https://trans.zb.com/record，选择你所要计算的货币类型，选择委托时间，
-   交易状态改为已完成，点击搜索，获取交易记录
+3. 打开 [https://trans.zb.com/record](https://trans.zb.com/record) ，
+   选择你所要计算的货币类型，选择委托时间，交易状态改为已完成，点击搜索，获取交
+   易记录
 4. 复制搜索出来的内容，到transaction_file指定的目录
 5. 运行程序，得到结果
 
