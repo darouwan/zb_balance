@@ -1,4 +1,6 @@
 import codecs
+import requests
+import json
 
 
 class Transactions:
@@ -18,6 +20,7 @@ class Transactions:
 def read_file(file_name="transactions.txt"):
     transaction_list = []
     for line in codecs.open(file_name, "r", "utf-8").readlines():
+        line = line.strip()
         if line.find("卖") >= 0:
             items = line.split("\t")
             transc = Transactions("-", float(items[1].split(" ")[3]), float(items[3]))
@@ -49,6 +52,20 @@ def get_balance(list):
                 final_money = final_money + transction.money_amount
     print("final coin = ", final_coin)
     print("final money = ", final_money)
+    print("Next buy = ", final_money/final_coin)
+    price = get_latest_market()
+    actual_benefit = final_coin*price+final_money
+    print("Actual Benefit = ", actual_benefit)
+
+
+def get_latest_market(coin_type="hsr", currency="qc"):
+    r = requests.get("http://api.zb.com/data/v1/ticker?market="+coin_type+"_"+currency)
+    content = r.content
+    #print(content)
+    data = json.loads(content.decode())
+    price = float(data['ticker']['last'])
+    print("The last price = ", price)
+    return price
 
 
 get_balance(read_file())
