@@ -3,9 +3,9 @@ import json
 
 import requests
 
-transaction_file = "transactions.txt" # transactions file name
-coin_type = "hsr" # coin type, like btc,eth, or hsr, etc.
-currency_type = "qc" # currency name, like qc or usdt
+transaction_file = "transactions.txt"  # transactions file name
+coin_type = "hsr"  # coin type, like btc,eth, or hsr, etc.
+currency_type = "qc"  # currency name, like qc or usdt
 
 
 class Transactions:
@@ -44,17 +44,17 @@ def read_file(file_name="transactions.txt"):
     return transaction_list
 
 
-def get_balance(list):
+def get_balance(trans_list):
     final_coin = 0
     final_money = 0
-    for transction in list:
-        if isinstance(transction, Transactions):
-            if transction.category == "+":
-                final_coin = final_coin + transction.coin_amount
-                final_money = final_money - transction.money_amount
-            elif transction.category == "-":
-                final_coin = final_coin - transction.coin_amount
-                final_money = final_money + transction.money_amount
+    for transaction in trans_list:
+        if isinstance(transaction, Transactions):
+            if transaction.category == "+":
+                final_coin = final_coin + transaction.coin_amount
+                final_money = final_money - transaction.money_amount
+            elif transaction.category == "-":
+                final_coin = final_coin - transaction.coin_amount
+                final_money = final_money + transaction.money_amount
     print("final coin = ", final_coin)
     print("final money = ", final_money)
     print("Next buy = ", final_money / final_coin)
@@ -73,4 +73,5 @@ def get_latest_market(coin="hsr", currency="qc"):
     return price
 
 
-get_balance(read_file(transaction_file))
+if __name__ == "__main__":
+    get_balance(read_file(transaction_file))
