@@ -47,7 +47,7 @@ def get_balance(list):
             elif transction.category == "-":
                 final_coin = final_coin - transction.coin_amount
                 final_money = final_money + transction.money_amount
-    print("final coint = ", final_coin)
+    print("final coin = ", final_coin)
     print("final money = ", final_money)
 
 
