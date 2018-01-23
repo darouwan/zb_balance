@@ -61,8 +61,10 @@ def get_balance(trans_list):
                 final_money = final_money + transaction.money_amount
     print("final coin = ", final_coin)
     print("final money = ", final_money)
-    if final_coin != 0:
-        print("Next buy = ", final_money / final_coin)
+    if final_coin > 0:
+        print("Avg buying cost = ", -final_money / final_coin)
+    elif final_coin < 0:
+        print("Avg selling cost = ", -final_money / final_coin)
     price = get_latest_market(coin_type, currency_type)
     actual_benefit = final_coin * price + final_money
     print("Actual Benefit = ", actual_benefit)
@@ -75,7 +77,7 @@ def get_latest_market(coin="hsr", currency="qc"):
     # print(content)
     data = json.loads(content.decode())
     price = float(data['ticker']['last'])
-    print("The last price = ", price)
+    print("The latest price = %.2f %s" % (price, currency))
     return price
 
 
