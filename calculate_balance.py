@@ -4,7 +4,7 @@ import json
 import requests
 
 transaction_file = "transactions.txt"  # transactions file name
-coin_type = "hsr"  # coin type, like btc,eth, or hsr, etc.
+coin_type = "xrp"  # coin type, like btc,eth, or hsr, etc.
 currency_type = "qc"  # currency name, like qc or usdt
 
 
@@ -59,8 +59,8 @@ def get_balance(trans_list):
             elif transaction.category == "-":
                 final_coin = final_coin - transaction.coin_amount
                 final_money = final_money + transaction.money_amount
-    print("final coin = ", final_coin)
-    print("final money = ", final_money)
+    print("final coin changed = ", final_coin)
+    print("final money changed = ", final_money)
     if final_coin > 0:
         print("Avg buying cost = ", -final_money / final_coin)
     elif final_coin < 0:
