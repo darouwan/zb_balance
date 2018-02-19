@@ -4,7 +4,7 @@ import json
 import requests
 
 transaction_file = "transactions.txt"  # transactions file name
-coin_type = "xrp"  # coin type, like btc,eth, or hsr, etc.
+coin_type = "zb"  # coin type, like btc,eth, or hsr, etc.
 currency_type = "qc"  # currency name, like qc or usdt
 
 
@@ -26,18 +26,21 @@ def read_file(file_name="transactions.txt"):
     transaction_list = []
     for line in codecs.open(file_name, "r", "utf-8").readlines():
         line = line.strip()
-        if line.find("卖") >= 0:
-            items = line.split("\t")
-            transc = Transactions("-", float(items[1].split(" ")[3]), float(items[3]))
-            transaction_list.append(transc)
-            print(transc)
-            continue
-        elif line.find("买") >= 0:
-            items = line.split("\t")
-            transc = Transactions("+", float(items[1].split(" ")[3]), float(items[3]))
-            transaction_list.append(transc)
-            print(transc)
-            continue
+        if line.find("已完成")>=0:
+            if line.find("卖") >= 0:
+                items = line.split("\t")
+                transc = Transactions("-", float(items[1].split(" ")[3]), float(items[3]))
+                transaction_list.append(transc)
+                print(transc)
+                continue
+            elif line.find("买") >= 0:
+                items = line.split("\t")
+                transc = Transactions("+", float(items[1].split(" ")[3]), float(items[3]))
+                transaction_list.append(transc)
+                print(transc)
+                continue
+            else:
+                continue
         else:
             continue
 
